@@ -39,13 +39,13 @@ public class AccountStatementServiceImpl implements AccountStatementService {
 
 	final private Logger logger = LoggerFactory.getLogger(AccountStatementServiceImpl.class);
 
-	public List<AccountStatement> getAccountStatement(final UserRequest userRequest) {
+	public AccountStatement getAccountStatement(final UserRequest userRequest) {
 		final List<Integer> ids = new ArrayList<>();
 		ids.add(userRequest.getId());
 		logger.info("In StatmentServiceImpl. Trying to fetch account statement details for account with account id: {}",
 				userRequest.getId());
 		final List<Account> accounts = accountRepository.findAllById(ids);
-		final List<AccountStatement> accountStatement = new ArrayList<>();
+		final AccountStatement accountStatement = new AccountStatement();
 		if (StringUtils.isNotEmpty(userRequest.getFromDate()) && StringUtils.isNotEmpty(userRequest.getToDate())) {
 			logger.info("Filtering statement details based on user requested date values");
 			accounts.stream().forEach(account -> {
@@ -83,15 +83,15 @@ public class AccountStatementServiceImpl implements AccountStatementService {
 				&& Double.valueOf(transaction.getAmount()).compareTo(userRequest.getToAmount()) <= 0);
 	}
 
-	private void populateAccountStatement(final List<AccountStatement> filteredAccountStatement, Account account,
+	private void populateAccountStatement(final AccountStatement filteredAccountStatement, Account account,
 			final Stream<Statement> filteredTransactions) {
 		final List<AccountTransaction> transactionDetails = new ArrayList<>();
 		filteredTransactions.forEach(filteredTransaction -> transactionDetails
 				.add(new AccountTransaction(filteredTransaction.getDatefield(), filteredTransaction.getAmount())));
-		final AccountStatement accountStatement = new AccountStatement(account.getId(),
-				AccountStatementUtil.hashAccountNumber(account.getAccountNumber()), account.getAccountType(),
-				transactionDetails);
-		filteredAccountStatement.add(accountStatement);
+		filteredAccountStatement.setAccountId(account.getId());
+		filteredAccountStatement.setAccountNumber(AccountStatementUtil.hashAccountNumber(account.getAccountNumber()));
+		filteredAccountStatement.setAccountType(account.getAccountType());
+		filteredAccountStatement.setTransactionDetails(transactionDetails);
 	}
 
 	private Predicate<? super Statement> dateFilter(final UserRequest userRequest) {

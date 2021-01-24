@@ -42,13 +42,13 @@ public class AccountStatementServiceTest {
 		final List<Integer> ids = new ArrayList<>();
 		ids.add(userRequest.getId());
 		when(accountRepository.findAllById(ids)).thenReturn(mockAccountData());
-		final List<AccountStatement> accountStatement = statementService.getAccountStatement(userRequest);
+		final AccountStatement accountStatement = statementService.getAccountStatement(userRequest);
 		assertNotNull(accountStatement);
-		assertTrue(accountStatement.get(0).getAccountId() == 1);
-		assertTrue(MASKED_ACCOUNT_NUMBER.equals(accountStatement.get(0).getAccountNumber()));
-		assertTrue(ACCOUNT_TYPE.equals(accountStatement.get(0).getAccountType()));
-		assertNotNull(accountStatement.get(0).getTransactionDetails());
-		assertTrue(accountStatement.get(0).getTransactionDetails().size() == 1);
+		assertTrue(accountStatement.getAccountId() == 1);
+		assertTrue(MASKED_ACCOUNT_NUMBER.equals(accountStatement.getAccountNumber()));
+		assertTrue(ACCOUNT_TYPE.equals(accountStatement.getAccountType()));
+		assertNotNull(accountStatement.getTransactionDetails());
+		assertTrue(accountStatement.getTransactionDetails().size() == 1);
 	}
 
 	@Test
@@ -57,13 +57,13 @@ public class AccountStatementServiceTest {
 		final List<Integer> ids = new ArrayList<>();
 		ids.add(userRequest.getId());
 		when(accountRepository.findAllById(ids)).thenReturn(mockAccountData());
-		final List<AccountStatement> accountStatement = statementService.getAccountStatement(userRequest);
+		final AccountStatement accountStatement = statementService.getAccountStatement(userRequest);
 		assertNotNull(accountStatement);
-		assertTrue(accountStatement.get(0).getAccountId() == 1);
-		assertTrue(MASKED_ACCOUNT_NUMBER.equals(accountStatement.get(0).getAccountNumber()));
-		assertTrue(ACCOUNT_TYPE.equals(accountStatement.get(0).getAccountType()));
-		assertNotNull(accountStatement.get(0).getTransactionDetails());
-		assertTrue(accountStatement.get(0).getTransactionDetails().size() == 2);
+		assertTrue(accountStatement.getAccountId() == 1);
+		assertTrue(MASKED_ACCOUNT_NUMBER.equals(accountStatement.getAccountNumber()));
+		assertTrue(ACCOUNT_TYPE.equals(accountStatement.getAccountType()));
+		assertNotNull(accountStatement.getTransactionDetails());
+		assertTrue(accountStatement.getTransactionDetails().size() == 2);
 	}
 
 	@Test
@@ -72,13 +72,13 @@ public class AccountStatementServiceTest {
 		final List<Integer> ids = new ArrayList<>();
 		ids.add(userRequest.getId());
 		when(accountRepository.findAllById(ids)).thenReturn(mockAccountData());
-		final List<AccountStatement> accountStatement = statementService.getAccountStatement(userRequest);
+		final AccountStatement accountStatement = statementService.getAccountStatement(userRequest);
 		assertNotNull(accountStatement);
-		assertTrue(accountStatement.get(0).getAccountId() == 1);
-		assertTrue(MASKED_ACCOUNT_NUMBER.equals(accountStatement.get(0).getAccountNumber()));
-		assertTrue(ACCOUNT_TYPE.equals(accountStatement.get(0).getAccountType()));
-		assertNotNull(accountStatement.get(0).getTransactionDetails());
-		assertTrue(accountStatement.get(0).getTransactionDetails().size() == 4);
+		assertTrue(accountStatement.getAccountId() == 1);
+		assertTrue(MASKED_ACCOUNT_NUMBER.equals(accountStatement.getAccountNumber()));
+		assertTrue(ACCOUNT_TYPE.equals(accountStatement.getAccountType()));
+		assertNotNull(accountStatement.getTransactionDetails());
+		assertTrue(accountStatement.getTransactionDetails().size() == 4);
 	}
 
 	private UserRequest mockUserRequest(final Integer id, final Double fromAmount, final Double toAmount,

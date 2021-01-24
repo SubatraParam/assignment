@@ -3,8 +3,6 @@
  */
 package com.abc.account.statement.service;
 
-import java.util.List;
-
 import com.abc.account.statement.model.AccountStatement;
 import com.abc.account.statement.model.UserRequest;
 
@@ -13,5 +11,5 @@ import com.abc.account.statement.model.UserRequest;
  *
  */
 public interface AccountStatementService {
-	public List<AccountStatement> getAccountStatement(final UserRequest userRequest);
+	public AccountStatement getAccountStatement(final UserRequest userRequest);
 }

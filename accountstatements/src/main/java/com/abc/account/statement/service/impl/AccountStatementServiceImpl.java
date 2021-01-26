@@ -6,6 +6,7 @@ package com.abc.account.statement.service.impl;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
@@ -50,13 +51,14 @@ public class AccountStatementServiceImpl implements AccountStatementService {
 			logger.info("Filtering statement details based on user requested date values");
 			accounts.stream().forEach(account -> {
 				final Stream<Statement> filteredTransactions = account.getTransactions().stream()
-						.filter(dateFilter(userRequest));
+						.sorted(AccountStatementUtil.dateComparator).filter(dateFilter(userRequest));
 				populateAccountStatement(accountStatement, account, filteredTransactions);
 			});
 		} else if (null != userRequest.getFromAmount() && null != userRequest.getToAmount()) {
 			logger.info("Filtering statement details based on user requested amount values");
 			accounts.stream().forEach(account -> {
 				final Stream<Statement> filteredTransactions = account.getTransactions().stream()
+						.sorted(Comparator.comparing(Statement::getAmount).reversed())
 						.filter(amountFilter(userRequest));
 				populateAccountStatement(accountStatement, account, filteredTransactions);
 			});
@@ -71,7 +73,7 @@ public class AccountStatementServiceImpl implements AccountStatementService {
 					.toString());
 			accounts.stream().forEach(account -> {
 				final Stream<Statement> filteredTransactions = account.getTransactions().stream()
-						.filter(dateFilter(userRequest));
+						.sorted(AccountStatementUtil.dateComparator).filter(dateFilter(userRequest));
 				populateAccountStatement(accountStatement, account, filteredTransactions);
 			});
 		}

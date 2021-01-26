@@ -38,7 +38,7 @@ public class Account {
 	@Column(name = "account_number")
 	private String accountNumber;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany  (cascade = CascadeType.ALL) 
 	@JoinColumn(name = "account_id", referencedColumnName = "id")
 	private List<Statement> transactions = new ArrayList<>();
 

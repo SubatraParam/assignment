@@ -2,10 +2,12 @@ package com.abc.account.statement.util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.Locale;
 
 import com.abc.account.exception.InvalidInputException;
 import com.abc.account.statement.constant.AccountStatementConstants;
+import com.abc.account.statement.entity.Statement;
 
 public final class AccountStatementUtil {
 	public static String hashAccountNumber(final String accountNumber) {
@@ -29,4 +31,15 @@ public final class AccountStatementUtil {
 					"The fromamount cannot be greater than toamount value. Please enter valid amount values to proceed.");
 		}
 	}
+	
+	public static Comparator<Statement> dateComparator = new Comparator<Statement>() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH);
+
+		@Override
+		public int compare(Statement s1, Statement s2) {
+			LocalDate d1 = LocalDate.parse(s1.getDatefield(), formatter);
+			LocalDate d2 = LocalDate.parse(s2.getDatefield(), formatter);
+			return d2.compareTo(d1);
+		}
+	};
 }
